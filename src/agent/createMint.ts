@@ -15,12 +15,8 @@ import { generateSpecificKeypair } from './utils'
 import { bs58 } from 'bs58'
 
 export const createMint = async () => {
-  const raydium = await initSdk()
-
-  const programId = LAUNCHPAD_PROGRAM // devent: DEVNET_PROGRAM_ID.LAUNCHPAD_PROGRAM
-
-
-  const secretKeyBase58 = 'vaEUQQ392os4nXdKfEnTGVkNFgJdFLa9UuvAxcZrUd3qemtNYMqN6ma8NiR63CBhZypYadDTKX1Kb92tQKMWTCQ'
+  const programId = LAUNCHPAD_PROGRAM
+  const secretKeyBase58 = '<INPUT_YOUR_WALLET_SECRET_KEY_BASE58>'
   const secretKey = bs58.decode(secretKeyBase58)
   const pair = Keypair.fromSecretKey(secretKey)
   const mintA = new PublicKey("5zm4S5VQgQaVzqdyNtuuCv2BXv2VW48vJAFxkmDfbonk");
@@ -35,7 +31,6 @@ export const createMint = async () => {
 
   const inAmount = new BN(1000)
 
-  // Rayidum UI usage: https://github.com/raydium-io/raydium-ui-v3-public/blob/master/src/store/useLaunchpadStore.ts#L329
   const { execute, transactions, extInfo } = await raydium.launchpad.createLaunchpad({
     programId,
     mintA,
@@ -53,7 +48,7 @@ export const createMint = async () => {
     platformId: new PublicKey('FfYek5vEz23cMkWsdJwG2oa6EphsvXSHrGpdALN4g6W1'), // default RAYDIUM playform 4Bu96XjU84XjPDSpveTVf6LYGCkfW5FK7SNkREWcEfV4
     txVersion: TxVersion.V0,
     slippage: new BN(100), // means 1%
-    buyAmount: inAmount,
+    buyamount: inAmount,
     createOnly: true, // true means create mint only, false will "create and buy together"
     extraSigners: [pair],
 
@@ -66,11 +61,6 @@ export const createMint = async () => {
 
     shareFeeReceiver: new PublicKey('9vrnuB757VCj8Kk5pc3cZvTdMAUNpiPkSLLK2sFWEx8o'), // only works when createOnly=false
     shareFeeRate: new BN(1000), // only works when createOnly=false
-
-    computeBudgetConfig: {
-      units: 600000,
-      microLamports: 46591500,
-    },
   })
 
   printSimulate(transactions)
