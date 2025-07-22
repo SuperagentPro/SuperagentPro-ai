@@ -43,7 +43,7 @@ export const createMint = async () => {
     name: 'SuperagentPro',
     symbol: 'SAPro',
     migrateType: 'amm',
-    uri: 'https://ipfs.io/ipfs/',
+    uri: 'https://ipfs.io/ipfs/QmXWq6htpAnTqvFQea4Jx7HZ9vV5PHY7mrC6z1h3bGxHpE',
 
     configId,
     configInfo, // optional, sdk will get data by configId if not provided
